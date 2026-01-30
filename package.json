@@ -1,0 +1,28 @@
+{
+  "name": "ofc-ts",
+  "version": "1.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "generate": "json2ts src/schema/schema.gen.json src/schema/generated.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "json-schema-to-typescript": "^15.0.4",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "ts-fsrs": "^4.6.0"
+  }
+}

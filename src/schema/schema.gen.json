@@ -1,0 +1,919 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-flashcard/schema/refs/heads/main/v1.0.0/schema.json",
+  "title": "Open Flashcard Standard - Deck",
+  "description": "Schema for validating a deck of flashcards",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "cards"
+  ],
+  "properties": {
+    "extends": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri-reference"
+      },
+      "description": "URIs (e.g., https://...) or file paths (e.g., ./local/deck.json) of other flashcard sets to inherit from. Only `cards` are imported from the referenced decks; all metadata and settings from the source decks are ignored"
+    },
+    "id": {
+      "$ref": "#/$defs/id",
+      "description": "Unique identifier for the deck"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the Open Flashcard Standard",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the flashcard deck"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the deck"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 creation timestamp"
+    },
+    "modified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 modification timestamp"
+    },
+    "author": {
+      "type": "string",
+      "description": "Author of the flashcard deck"
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier (e.g., CC-BY-4.0, MIT, Apache-2.0). See https://spdx.org/licenses/ for valid identifiers. Use 'proprietary' for non-open content"
+    },
+    "tags": {
+      "$ref": "#/$defs/tags",
+      "description": "Deck-level tags for categorization"
+    },
+    "language": {
+      "$ref": "#/$defs/language"
+    },
+    "difficulty": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "category": {
+      "type": "string"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/card"
+      },
+      "description": "Array of flashcard objects"
+    },
+    "_generated_keepalive": {
+      "type": "object",
+      "description": "Dummy property to ensure all definitions are generated",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "mime": {
+          "$ref": "#/$defs/mime"
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "sort": {
+          "$ref": "#/$defs/sort"
+        },
+        "card": {
+          "$ref": "#/$defs/card"
+        },
+        "side": {
+          "$ref": "#/$defs/side"
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "content-text": {
+          "$ref": "#/$defs/content-text"
+        },
+        "content-markdown": {
+          "$ref": "#/$defs/content-markdown"
+        },
+        "content-html": {
+          "$ref": "#/$defs/content-html"
+        },
+        "content-latex": {
+          "$ref": "#/$defs/content-latex"
+        },
+        "content-image": {
+          "$ref": "#/$defs/content-image"
+        },
+        "content-audio": {
+          "$ref": "#/$defs/content-audio"
+        },
+        "content-video": {
+          "$ref": "#/$defs/content-video"
+        },
+        "content-tts": {
+          "$ref": "#/$defs/content-tts"
+        },
+        "content-mermaid": {
+          "$ref": "#/$defs/content-mermaid"
+        },
+        "content-code": {
+          "$ref": "#/$defs/content-code"
+        },
+        "content-list": {
+          "$ref": "#/$defs/content-list"
+        },
+        "content-multiple-choice": {
+          "$ref": "#/$defs/content-multiple-choice"
+        },
+        "content-custom": {
+          "$ref": "#/$defs/content-custom"
+        },
+        "content-url": {
+          "$ref": "#/$defs/content-url"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "ULID identifier (26 characters, Crockford Base32)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for categorization"
+    },
+    "language": {
+      "description": "ISO 639-1 language code"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Arbitrary key-value metadata"
+    },
+    "direction": {
+      "enum": [
+        "auto",
+        "ltr",
+        "rtl"
+      ],
+      "default": "ltr",
+      "description": "Text direction"
+    },
+    "inline": {
+      "type": "string",
+      "description": "Inline content"
+    },
+    "file": {
+      "type": "string",
+      "description": "Local file path (relative to the JSON/YAML file location)"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Web URL"
+    },
+    "base64": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "Base64 encoded data"
+    },
+    "mime": {
+      "type": "string",
+      "pattern": "^[a-z]+/[a-zA-Z0-9.+-]+$",
+      "description": "MIME type (e.g., image/png, application/json)"
+    },
+    "hash": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "enum": [
+            "sha256",
+            "sha512",
+            "sha3-256",
+            "sha3-512",
+            "md5"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "description": "Content hash for cache invalidation and deduplication"
+    },
+    "sort": {
+      "enum": [
+        "unordered",
+        "ascending",
+        "descending"
+      ],
+      "default": "unordered",
+      "description": "Sort order for lists and sequences"
+    },
+    "card": {
+      "type": "object",
+      "required": [
+        "id",
+        "sides"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id",
+          "description": "Unique identifier for the card"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 creation timestamp"
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 modification timestamp"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "metadata": {
+          "$ref": "#/$defs/metadata"
+        },
+        "notes": {
+          "$ref": "#/$defs/content",
+          "description": "Personal annotations not shown during review"
+        },
+        "hint": {
+          "$ref": "#/$defs/content",
+          "description": "Hint shown on request to help answer the card"
+        },
+        "sides": {
+          "type": "array",
+          "description": "Array of card sides. Each card can have 1 or more sides to support various patterns (e.g., single-sided cards, term-definition pairs, one term with multiple definitions, etc.)",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/side"
+          }
+        }
+      },
+      "description": "A single flashcard containing one or more sides with terms and definitions"
+    },
+    "side": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "content"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "term",
+            "definition"
+          ],
+          "default": "term",
+          "description": "Whether this side is a term or definition. For multi-sided cards, you can have multiple terms or definitions (e.g., term-definition, term-definition-definition, etc.)"
+        },
+        "layout": {
+          "enum": [
+            "vertical",
+            "horizontal",
+            "grid",
+            "custom"
+          ],
+          "default": "vertical"
+        },
+        "content": {
+          "type": "array",
+          "description": "Array of content items (text, images, audio, etc.) that make up this side",
+          "items": {
+            "$ref": "#/$defs/content"
+          }
+        }
+      },
+      "description": "A single side of a flashcard containing an array of content items"
+    },
+    "content": {
+      "description": "Content item (polymorphic)",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "content-text": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        },
+        "style": {
+          "enum": [
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "subtitle",
+            "caption"
+          ],
+          "default": "p",
+          "description": "Text style variant"
+        },
+        "font": {
+          "type": "string",
+          "description": "Name of the Google Font to apply (e.g., 'Roboto', 'Open Sans'). See https://fonts.google.com/"
+        },
+        "cloze": {
+          "type": "boolean",
+          "default": false,
+          "description": "Indicates if the text contains cloze deletions (e.g. {{answer}})"
+        }
+      }
+    },
+    "content-markdown": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        }
+      }
+    },
+    "content-html": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "sanitize": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to sanitize HTML content"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        }
+      }
+    },
+    "content-latex": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "block"
+          ],
+          "default": "inline"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        }
+      }
+    },
+    "content-image": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "mime": {
+          "$ref": "#/$defs/mime"
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "width": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string"
+        }
+      }
+    },
+    "content-audio": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "mime": {
+          "$ref": "#/$defs/mime"
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "controls": {
+          "type": "boolean",
+          "default": true
+        },
+        "autoplay": {
+          "type": "boolean",
+          "default": false
+        },
+        "tracks": {
+          "type": "array",
+          "description": "Subtitle, caption, or description tracks for accessibility",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "subtitles",
+                  "captions",
+                  "descriptions"
+                ],
+                "description": "Track type: subtitles for translation, captions for deaf/hard-of-hearing, descriptions for audio descriptions"
+              },
+              "language": {
+                "$ref": "#/$defs/language"
+              },
+              "label": {
+                "type": "string",
+                "description": "Human-readable label for track selection UI"
+              },
+              "file": {
+                "$ref": "#/$defs/file"
+              },
+              "url": {
+                "$ref": "#/$defs/url"
+              },
+              "default": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether this track should be enabled by default"
+              }
+            }
+          }
+        }
+      }
+    },
+    "content-video": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "enum": [
+            "native",
+            "youtube",
+            "vimeo"
+          ],
+          "default": "native",
+          "description": "Video provider to determine which player to use"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "mime": {
+          "$ref": "#/$defs/mime"
+        },
+        "hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "poster": {
+          "type": "string"
+        },
+        "controls": {
+          "type": "boolean",
+          "default": true
+        },
+        "width": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string",
+          "description": "Start time (e.g., 0s, 1m30s)"
+        },
+        "end": {
+          "type": "string",
+          "description": "End time"
+        },
+        "autoplay": {
+          "type": "boolean",
+          "default": false
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        },
+        "tracks": {
+          "type": "array",
+          "description": "Subtitle, caption, or description tracks for accessibility",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "subtitles",
+                  "captions",
+                  "descriptions"
+                ],
+                "description": "Track type: subtitles for translation, captions for deaf/hard-of-hearing, descriptions for blind/visually impaired"
+              },
+              "language": {
+                "$ref": "#/$defs/language"
+              },
+              "label": {
+                "type": "string",
+                "description": "Human-readable label for track selection UI"
+              },
+              "file": {
+                "$ref": "#/$defs/file"
+              },
+              "url": {
+                "$ref": "#/$defs/url"
+              },
+              "default": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether this track should be enabled by default"
+              }
+            }
+          }
+        }
+      }
+    },
+    "content-tts": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Text or SSML to synthesize into speech (inline)"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "voice": {
+          "type": "string",
+          "description": "Voice identifier (implementation-specific)"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        },
+        "speed": {
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 4,
+          "default": 1,
+          "description": "Playback speed multiplier"
+        },
+        "pitch": {
+          "type": "number",
+          "description": "Voice pitch adjustment (implementation-specific range)"
+        },
+        "volume": {
+          "type": "number",
+          "description": "Volume level (implementation-specific range)"
+        }
+      }
+    },
+    "content-mermaid": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "theme": {
+          "type": "string",
+          "default": "default"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        }
+      }
+    },
+    "content-code": {
+      "type": "object",
+      "properties": {
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "syntax": {
+          "type": "string",
+          "description": "Programming language for syntax highlighting (e.g., 'javascript', 'python', 'rust')"
+        }
+      }
+    },
+    "content-list": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/content"
+          },
+          "description": "Array of list items"
+        },
+        "sort": {
+          "$ref": "#/$defs/sort"
+        },
+        "marker": {
+          "type": "string",
+          "description": "Custom marker for unordered lists (e.g., '•', '-', '*'). If not specified, uses default bullet style"
+        },
+        "startNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Starting number for ordered lists"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        }
+      }
+    },
+    "content-multiple-choice": {
+      "type": "object",
+      "description": "Multiple choice question with 2-6 options and one or more correct answers. For questions with multiple correct answers, users must select ALL correct options to be marked as correct (all-or-nothing grading)",
+      "required": [
+        "options",
+        "correct"
+      ],
+      "properties": {
+        "options": {
+          "type": "array",
+          "description": "Array of answer options",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "content"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id",
+                "description": "Unique identifier for the option"
+              },
+              "content": {
+                "$ref": "#/$defs/content",
+                "description": "The option content"
+              },
+              "description": {
+                "$ref": "#/$defs/content",
+                "description": "Explanation of why this option is correct or incorrect (shown after answer)"
+              },
+              "hint": {
+                "$ref": "#/$defs/content",
+                "description": "Hint for this specific option (shown on request)"
+              }
+            }
+          }
+        },
+        "correct": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "minItems": 1,
+          "description": "IDs of correct options. When multiple correct answers are specified, the user MUST select ALL of them to be marked as correct"
+        },
+        "hint": {
+          "$ref": "#/$defs/content",
+          "description": "General hint for the question (shown on request before answering)"
+        },
+        "explanation": {
+          "$ref": "#/$defs/content",
+          "description": "General explanation shown after answering"
+        },
+        "shuffle": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to shuffle option order during review"
+        },
+        "display": {
+          "enum": [
+            "vertical",
+            "horizontal",
+            "grid"
+          ],
+          "default": "vertical",
+          "description": "Layout for displaying options"
+        },
+        "level": {
+          "$ref": "#/$defs/content",
+          "description": "Knowledge/cognitive level (e.g., 'K1', 'K2', 'K3' for Bloom's taxonomy)"
+        },
+        "points": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Point value for scoring"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        }
+      }
+    },
+    "content-custom": {
+      "type": "object",
+      "required": [
+        "plugin"
+      ],
+      "properties": {
+        "plugin": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object"
+        },
+        "inline": {
+          "$ref": "#/$defs/inline"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "base64": {
+          "$ref": "#/$defs/base64"
+        },
+        "direction": {
+          "$ref": "#/$defs/direction"
+        }
+      }
+    },
+    "content-url": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "title": {
+          "type": "string",
+          "description": "Optional title for the link"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        }
+      }
+    }
+  }
+}
